@@ -12,7 +12,8 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Complile CSS and Javascript
-        run: |
-          npm install
-          npm run prod
+      - name: Configure PHP 8.1
+        uses: shivammathur/setup-php@v2
+        with:
+          php-verion: 8.1
+          extensions: bcmath, ctype, curl, dom, fileinfo, json, mbstring, openssl, pcre, pdo, tokenizer, xml
