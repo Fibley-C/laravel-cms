@@ -32,8 +32,8 @@ COPY --chown=www-data . .
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-RUN php artisan cache:clear
-RUN php artisan config:clear
+# RUN php artisan cache:clear
+# RUN php artisan config:clear
 
 RUN chmod -R 755 /var/www/html/storage
 RUN chmod -R 755 /var/www/html/bootstrap
