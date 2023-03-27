@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   app:
-    build: .
+    image: "ghcr.io/fibley-c/laravel-cms:main"
     restart: always
     volumes:
       - .:/var/www/html
