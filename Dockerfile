@@ -42,7 +42,7 @@ RUN chmod -R 755 /var/www/html/bootstrap
 RUN composer install --no-dev --prefer-dist --optimize-autoloader --no-scripts --no-progress
 
 # Build assets
-RUN npm install
+RUN npm ci
 RUN npm run build
 
 # Copy Nginx configuration
