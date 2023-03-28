@@ -39,11 +39,15 @@ RUN chmod -R 755 /var/www/html/storage
 RUN chmod -R 755 /var/www/html/bootstrap
 
 # Install dependencies
-RUN composer install --no-dev --prefer-dist --optimize-autoloader --no-scripts --no-progress
+# For production
+# RUN composer install --no-dev --prefer-dist --optimize-autoloader --no-scripts --no-progress
+RUN composer install --no-progress
 
 # Build assets
 RUN npm ci
-RUN npm run build
+# For production
+# RUN npm run build
+RUN npm run dev
 
 # Copy Nginx configuration
 COPY docker/nginx.conf /etc/nginx/conf.d/default.conf
