@@ -40,11 +40,11 @@ RUN chmod -R 755 /var/www/html/bootstrap
 
 # Install dependencies
 # For production
-RUN composer install --no-dev --prefer-dist --optimize-autoloader --no-scripts --no-progress
+# RUN composer install --no-dev --prefer-dist --optimize-autoloader --no-scripts --no-progress
+RUN composer install -no-scripts --no-progress
 
 # Build assets
 RUN npm ci
-# For producton
 RUN npm run build
 
 # Copy Nginx configuration
