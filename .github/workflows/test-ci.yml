@@ -25,6 +25,7 @@ jobs:
 
     - name: Prepare Laravel Application
       run: |
+        cp .env.testing .env
         php artisan key:generate
     
     - name: Install front-end dependencies
