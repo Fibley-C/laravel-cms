@@ -1,24 +1,48 @@
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
+name: CI/CD
 
-# GitHub recommends pinning actions to a commit SHA.
-# To get a newer version, you will need to update the SHA.
-# You can also reference a tag or branch, but the action may change without warning.
-
-name: Create and publish a Docker image
-
-on:
-  push:
-    branches: ['main']
+on: push
 
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
+  phpunit:
+    runs-on: ubuntu-latest
+    container:
+      image: kirschbaumdevelopment/laravel-test-runner:8.1
+ 
+    services:
+      mysql:
+        image: mysql:8
+        env:
+          MYSQL_ROOT_PASSWORD: password
+          MYSQL_DATABASE: testing
+        ports:
+          - 33306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+ 
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Install composer dependencies
+      run: |
+        composer install --no-scripts
+
+    - name: Prepare Laravel Application
+      run: |
+        php artisan key:generate --env=testing
+    
+    - name: Install front-end dependencies
+      run: |
+        npm install
+        npm run build
+ 
+    - name: Run Testsuite
+      run: php artisan test tests/
+
   build-and-push-image:
+    needs: phpunit
     runs-on: ubuntu-latest
     permissions:
       contents: read
