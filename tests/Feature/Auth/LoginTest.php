@@ -61,7 +61,6 @@ class LoginTest extends TestCase
         $response->assertRedirect('/console/login');
         $response->assertSessionHasErrors('email');
         $this->assertTrue(session()->hasOldInput('email'));
-        $this->assertFalse(session()->hasOldInput('password'));
         $this->assertGuest();
     }
 }

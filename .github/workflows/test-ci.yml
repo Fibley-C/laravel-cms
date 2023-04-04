@@ -25,7 +25,7 @@ jobs:
 
     - name: Prepare Laravel Application
       run: |
-        cp .env.example .env
+        cp .env.testing .env.testing
         php artisan key:generate
     
     - name: Install front-end dependencies
@@ -34,4 +34,4 @@ jobs:
         npm run build
  
     - name: Run Testsuite
-      run: vendor/bin/phpunit tests/
+      run: php artisan test tests/
